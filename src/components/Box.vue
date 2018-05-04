@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" @click="openMessage">
       <span class="content">{{ content }}</span>
   </div>
 </template>
@@ -27,11 +27,15 @@ export default class Box extends Vue {
     public defaultContent = 'Hello';
 
     @Prop({default: 'World'})
-    public msg: string;
+    public msg: string | undefined;
 
     // Computed properties are written as getters and setters on the class.
     get content() {
         return this.defaultContent + ' ' + this.msg;
+    }
+
+    private openMessage() {
+        this.$message('这是一条消息提示');
     }
 }
 </script>
