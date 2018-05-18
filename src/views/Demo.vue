@@ -5,7 +5,7 @@
                 <el-col :span=3 class="logo" :style="{width: asideWidth}">
                     logo
                 </el-col>
-                <el-col :span=1 @click.native="changeMenuStatus">
+                <el-col :span=1 @click.native="changeMenuStatus" class="menu-switch">
                     <i :class="menuStatusClass"></i>
                 </el-col>
             </el-row>
@@ -56,7 +56,17 @@
                 </el-menu>
             </el-aside>
             <el-main>
+                <el-steps
+                    class="steps"
+                    :space="200"
+                    :active="active"
+                    finish-status="success">
+                    <el-step title="步骤 1" icon="el-icon-edit"></el-step>
+                    <el-step title="步骤 2" icon="el-icon-upload"></el-step>
+                    <el-step title="步骤 3" icon="el-icon-picture"></el-step>
+                </el-steps>
 
+                <el-button style="margin-top: 12px;" @click="nextStep">下一步</el-button>
             </el-main>
         </el-container>
     </el-container>
@@ -69,6 +79,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Demo extends Vue {
     private menuData = ['配置一', '配置二', '配置三'];
     private isCollapse = false;
+    private active = 0;
 
     // computed
     get menuStatusClass() {
@@ -88,6 +99,11 @@ export default class Demo extends Vue {
     private changeMenuStatus() {
         this.isCollapse = !this.isCollapse;
     }
+    private nextStep() {
+        if (this.active++ > 2) {
+            this.active = 0;
+        }
+    }
 }
 </script>
 
@@ -102,14 +118,19 @@ export default class Demo extends Vue {
   .logo {
     width: 200px;
     font-size: 22px;
+    text-align: center;
     border-color: hsla(62, 77%, 76%, 0.3);
     border-right-width: 1px;
     border-right-style: solid;
+  }
+  .menu-switch {
+      text-align: center;
   }
 }
 
 .page-body {
   // flex: 1;
+  width: 100%;
   display: flex;
   position: absolute;
   top: 142px;
@@ -129,6 +150,12 @@ export default class Demo extends Vue {
       padding-left: 0;
       background-color: #eef1f6;
     }
+  }
+
+  .steps {
+    //   text-align: left;
+    // margin: 0 auto;
+    justify-content: center;
   }
 }
 </style>
